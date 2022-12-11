@@ -1,0 +1,309 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1:33065
+-- Tiempo de generación: 09-12-2022 a las 05:06:57
+-- Versión del servidor: 10.4.24-MariaDB
+-- Versión de PHP: 8.1.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `sistemaventa`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `id` int(11) NOT NULL,
+  `Dni` int(20) NOT NULL,
+  `nombre` varchar(150) NOT NULL,
+  `telefono` int(15) NOT NULL,
+  `direccion` varchar(200) NOT NULL,
+  `razon` varchar(200) NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`id`, `Dni`, `nombre`, `telefono`, `direccion`, `razon`, `fecha`) VALUES
+(7, 75824169, 'Lucia Mercedes', 948566429, 'Av.Los Pinos 785', '10 paracetamol y 5 dolocoladran', '2022-12-08 22:54:19'),
+(8, 89001496, 'Johnny Depp', 123400000, 'Piura-Av.Ricardo Palma 200', '4 ibuprofeno, 6 nastiflu y 10 jarabe para la tos', '2022-12-08 22:56:19'),
+(9, 15789548, 'Rosa', 451878229, 'Los Olivos 258', '10 vivaporu y 5 jarabe para la tos', '2022-12-08 22:58:24'),
+(10, 48259648, 'Nando cueva', 859123789, 'Av. delegado 125', '20 gasiobet, 15 paracetamol, 20 amoxilina y  5 vivaporu', '2022-12-08 23:02:17');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `config`
+--
+
+CREATE TABLE `config` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(200) NOT NULL,
+  `ruc` varchar(20) NOT NULL,
+  `telefono` int(15) NOT NULL,
+  `direccion` varchar(200) NOT NULL,
+  `razon` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `config`
+--
+
+INSERT INTO `config` (`id`, `nombre`, `ruc`, `telefono`, `direccion`, `razon`) VALUES
+(1, 'botinews', '10789456', 965076784, 'San Felipe, en la Av. Andrés Avelino Cáceres.', 'D\'TODO S.A.C.');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle`
+--
+
+CREATE TABLE `detalle` (
+  `id` int(11) NOT NULL,
+  `cod_pro` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio` decimal(10,2) NOT NULL,
+  `id_venta` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `detalle`
+--
+
+INSERT INTO `detalle` (`id`, `cod_pro`, `cantidad`, `precio`, `id_venta`) VALUES
+(1, 241, 10, '3.00', 1),
+(2, 342, 5, '3.00', 1),
+(3, 646, 5, '23.00', 2),
+(4, 444, 10, '5.00', 3),
+(5, 342, 5, '3.00', 3),
+(6, 949, 5, '2.00', 4),
+(7, 848, 47, '3.50', 5),
+(8, 949, 5, '2.00', 5),
+(9, 646, 20, '23.00', 5),
+(10, 646, 50, '23.00', 6),
+(11, 444, 50, '5.00', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `productos`
+--
+
+CREATE TABLE `productos` (
+  `id` int(11) NOT NULL,
+  `codigo` varchar(30) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `proveedor` varchar(100) NOT NULL,
+  `stock` int(11) NOT NULL,
+  `precio` decimal(10,2) NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id`, `codigo`, `nombre`, `proveedor`, `stock`, `precio`, `fecha`) VALUES
+(15, '0241', 'Paracetamol', 'Tereza Gomez', 90, '3.00', '2022-12-07 12:44:36'),
+(16, '0342', 'ibuprofeno', 'carlos alvaro', 40, '3.00', '2022-12-07 12:44:40'),
+(17, '0444', 'Jarabe para la tos', 'Pedro', 40, '5.00', '2022-12-07 12:44:49'),
+(18, '0545', 'nastifloo', 'Tereza Gomez', 50, '2.00', '2022-12-07 12:44:54'),
+(19, '0646', 'Dolocoladran', 'Rodolffo Ventura', 54, '23.00', '2022-12-07 12:44:57'),
+(20, '0747', 'vivaporu', 'Fiorela Alarcon', 60, '1.50', '2022-12-07 12:45:00'),
+(21, '0848', 'gasiobet', 'carlos alvaro', 70, '8.00', '2022-12-08 23:00:03');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `proveedor`
+--
+
+CREATE TABLE `proveedor` (
+  `id` int(11) NOT NULL,
+  `ruc` int(20) NOT NULL,
+  `nombre` varchar(200) NOT NULL,
+  `telefono` int(15) NOT NULL,
+  `direccion` varchar(200) NOT NULL,
+  `razon` varchar(200) NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `proveedor`
+--
+
+INSERT INTO `proveedor` (`id`, `ruc`, `nombre`, `telefono`, `direccion`, `razon`, `fecha`) VALUES
+(8, 55111506, 'Pedro', 758125888, 'Av.Los Santos 7000', 'META S.A.', '2022-12-07 12:46:06'),
+(9, 66250434, 'Tereza Gomez', 799123488, 'Av.Los Filipinos 456', 'ORNI S.R.L.', '2022-12-07 12:47:58'),
+(10, 92236022, 'Fiorela Alarcon', 895221344, 'Av.Alberto Reyes 1808', 'CLENDO S.A.', '2022-12-07 12:48:11'),
+(11, 12245688, 'Rodolffo Ventura', 664088466, 'Av.Toronto 255', 'UMBRELLA S.A.C.', '2022-12-07 12:48:36'),
+(12, 77788800, 'Andres', 789456123, 'Av.Los Pinos 800', 'KENDO S.A.', '2022-12-07 12:50:15'),
+(13, 20075519, 'carlos alvaro', 558426195, 'AV. arasto villa 265', 'KOYA S.A.', '2022-12-07 12:50:28'),
+(14, 66222508, 'Tony', 546234156, 'Av.los amautas ', 'PEMOL.sac', '2022-12-07 12:50:50');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `pass` varchar(100) NOT NULL,
+  `rol` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `nombre`, `correo`, `pass`, `rol`) VALUES
+(4, 'gorge alsado', 'utp.123@hotmail.com', '123', 'Administrador'),
+(5, 'Tony Alfredo', 'puma_252@utp.com', '123', 'Administrador'),
+(6, 'Juan Alvaro', 'pum_20@hotmail.com', '123', 'Administrador'),
+(7, 'Pedro gomez', 'borde_utp123@hotmail.com', '0123', 'Administrador'),
+(8, 'Pablo alonzo', 'utp.256@hotmail.com', '123', 'Administrador'),
+(9, 'pepe', 'pepe@hotmal.com', '123', 'Administrador');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ventas`
+--
+
+CREATE TABLE `ventas` (
+  `id` int(11) NOT NULL,
+  `cliente` varchar(100) NOT NULL,
+  `vendedor` varchar(100) NOT NULL,
+  `total` decimal(10,2) NOT NULL,
+  `fecha` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `ventas`
+--
+
+INSERT INTO `ventas` (`id`, `cliente`, `vendedor`, `total`, `fecha`) VALUES
+(1, 'Lucia Mercedes', 'gorge alsado', '45.00', '06/07/2022'),
+(2, 'Roberto', 'gorge alsado', '115.00', '08/07/2022'),
+(3, 'Rosa', 'Juan Alvaro', '65.00', '08/07/2022'),
+(4, 'Nando cueva', 'gorge alsado', '10.00', '22/07/2022'),
+(5, 'Nando cueva', 'Pablo alonzo', '634.50', '22/07/2022'),
+(6, 'Rosa', 'Pablo alonzo', '1150.00', '22/07/2022'),
+(7, 'Lucia Mercedes', 'pepe', '250.00', '07/12/2022');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `config`
+--
+ALTER TABLE `config`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `detalle`
+--
+ALTER TABLE `detalle`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `productos`
+--
+ALTER TABLE `productos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `proveedor`
+--
+ALTER TABLE `proveedor`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `ventas`
+--
+ALTER TABLE `ventas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `config`
+--
+ALTER TABLE `config`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle`
+--
+ALTER TABLE `detalle`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de la tabla `productos`
+--
+ALTER TABLE `productos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT de la tabla `proveedor`
+--
+ALTER TABLE `proveedor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `ventas`
+--
+ALTER TABLE `ventas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
